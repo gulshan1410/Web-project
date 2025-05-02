@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Age Calculator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+
+    .md {
+      width: 100%;
+      max-width: 320px;
+      border: 10px outset rgb(207, 226, 100);
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+      background-color: white;
+    }
+
+    .md h1 {
+      color: rgb(7, 73, 73);
+      text-decoration: underline goldenrod;
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    .md input[type="date"] {
+      width: 100%;
+      height: 35px;
+      font-size: 1rem;
+      background-color: rgb(203, 236, 178);
+      border-radius: 5px;
+      margin-bottom: 10px;
+      padding: 4px;
+    }
+
+    .md input[type="button"] {
+      width: 100%;
+      height: 40px;
+      font-size: 1rem;
+      background-color: black;
+      color: beige;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-bottom: 15px;
+    }
+
+    .result span {
+      display: block;
+      font-size: 1rem;
+      margin: 4px 0;
+      color: #333;
+    }
+
+    @media (max-width: 400px) {
+      .md h1 {
+        font-size: 1.2rem;
+      }
+
+      .md input[type="button"] {
+        font-size: 0.9rem;
+        height: 36px;
+      }
+
+      .result span {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="md">
+    <h1>Age Calculator</h1>
+    <input type="date" name="dob" id="dob" />
+    <input type="button" value="Find Age" id="FindAge" />
+    <div class="result">
+      <span id="yyy"></span>
+      <span id="mmm"></span>
+      <span id="ddd"></span>
+    </div>
+  </div>
+
+  <script>
+    const dp = document.getElementById("dob");
+    const btnAge = document.getElementById("FindAge");
+    const yyy = document.getElementById("yyy");
+    const mmm = document.getElementById("mmm");
+    const ddd = document.getElementById("ddd");
+
+    btnAge.addEventListener("click", () => {
+      const today = new Date();
+      const dobValue = dp.value;
+      if (!dobValue) {
+        yyy.textContent = "Please select a date.";
+        mmm.textContent = "";
+        ddd.textContent = "";
+        return;
+      }
+
+      const dob = new Date(dobValue);
+      let y1 = today.getFullYear();
+      let m1 = today.getMonth();
+      let d1 = today.getDate();
+      let y2 = dob.getFullYear();
+      let m2 = dob.getMonth();
+      let d2 = dob.getDate();
+
+      let yy = y1 - y2;
+      let mm = m1 - m2;
+      let dd = d1 - d2;
+
+      if (dd < 0) {
+        const daysInPrevMonth = new Date(y1, m1, 0).getDate();
+        dd += daysInPrevMonth;
+        mm--;
+      }
+
+      if (mm < 0) {
+        mm += 12;
+        yy--;
+      }
+
+      yyy.textContent = yy + " Years";
+      mmm.textContent = mm + " Months";
+      ddd.textContent = dd + " Days";
+    });
+  </script>
+</body>
+</html>
